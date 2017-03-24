@@ -21,6 +21,8 @@ namespace SdmoPortal.Controllers
         // GET: WorkOrders
         public async Task<ActionResult> Index()
         {
+            //Log4NetHelper.Log("Hello sailor!", LogLevel.INFO, "TEST", 0, "Tester", null);
+
             var workOrders = db.WorkOrders.Include(w => w.CurrentWorker).Include(w => w.Customer);
             return View(await workOrders.ToListAsync());
         }
@@ -60,6 +62,9 @@ namespace SdmoPortal.Controllers
                 workOrder.CurrentWorkerId = User.Identity.GetUserId();
                 db.WorkOrders.Add(workOrder);
                 await db.SaveChangesAsync();
+
+                Log4NetHelper.Log(String.Format("Work order {0} created.",workOrder.WorkOrderId), LogLevel.INFO, "WorkOrders", workOrder.WorkOrderId, User.Identity.Name, null);
+
                 return RedirectToAction("Edit", new { controller = "WorkOrders", action = "Edit", Id = workOrder.WorkOrderId });
             }
 
@@ -113,6 +118,16 @@ namespace SdmoPortal.Controllers
                 {
                     TempData["MessageToClient"] = pr.Message;
                 }
+                //try
+                //{
+                //    var zero = 0;
+                //    var test = 1 / zero;
+                //}
+                //catch (Exception ex)
+                //{
+                //    Log4NetHelper.Log(null, LogLevel.ERROR, "WorkOrders", workOrder.WorkOrderId, User.Identity.Name, ex);
+                //}
+
                 //Now is handle by the ClaimWorkOrder method
                 //workOrder.CurrentWorkerId = User.Identity.GetUserId();
                 db.Entry(workOrder).State = EntityState.Modified;

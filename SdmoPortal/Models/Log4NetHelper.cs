@@ -24,7 +24,7 @@ namespace SdmoPortal.Models
             return LogManager.GetLogger(name);
         }
 
-        public static void Log(string message, LogLevel logLevel, string entityFormalNamePlural, string entityKeyValue, string userName, Exception exception)
+        public static void Log(string message, LogLevel logLevel, string entityFormalNamePlural, int entityKeyValue, string userName, Exception exception)
         {
             ILog logger = GetLogger(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
             GlobalContext.Properties["EntityFormalNamePlural"] = !String.IsNullOrWhiteSpace(entityFormalNamePlural) ? entityFormalNamePlural : String.Empty;
