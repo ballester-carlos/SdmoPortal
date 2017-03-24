@@ -24,20 +24,20 @@ namespace SdmoPortal.DataLayer
         public DbSet<WorkOrder> WorkOrders { get; set; }
         public DbSet<LogEntry> LogEntries { get; set; }
 
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Configurations.Add(new CategoryConfiguration());
-        //    modelBuilder.Configurations.Add(new CustomerConfiguration());
-        //    modelBuilder.Configurations.Add(new InventoryItemConfiguration());
-        //    modelBuilder.Configurations.Add(new LaborConfiguration());
-        //    modelBuilder.Configurations.Add(new PartConfiguration());
-        //    modelBuilder.Configurations.Add(new ServiceItemConfiguration());
-        //    modelBuilder.Configurations.Add(new WorkOrderConfiguration());
-        //    modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
-        //    modelBuilder.Configurations.Add(new LogEntryConfiguration());
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new CategoryConfiguration());
+            modelBuilder.Configurations.Add(new CustomerConfiguration());
+            modelBuilder.Configurations.Add(new InventoryItemConfiguration());
+            modelBuilder.Configurations.Add(new LaborConfiguration());
+            modelBuilder.Configurations.Add(new PartConfiguration());
+            modelBuilder.Configurations.Add(new ServiceItemConfiguration());
+            modelBuilder.Configurations.Add(new WorkOrderConfiguration());
+            modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
+            modelBuilder.Configurations.Add(new LogEntryConfiguration());
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+            base.OnModelCreating(modelBuilder);
+        }
 
         public static ApplicationDbContext Create()
         {

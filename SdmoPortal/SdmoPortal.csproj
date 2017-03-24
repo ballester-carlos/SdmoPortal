@@ -425,6 +425,7 @@
     <Content Include="Views\LogEntries\Details.cshtml" />
     <Content Include="Views\LogEntries\Edit.cshtml" />
     <Content Include="Views\LogEntries\Index.cshtml" />
+    <Content Include="Views\LogEntries\_LogEntries.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
