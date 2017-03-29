@@ -108,10 +108,10 @@ namespace SdmoPortal.Controllers
                 }
                 else if (command == "Claim")
                 {
-                    pr = workOrder.ClaimWorkOrder(User.Identity.GetUserId());
+                    pr = workOrder.ClaimWorkListItem(User.Identity.GetUserId());
                 } else
                 {
-                    pr = workOrder.PromoteWorkOrder(command);
+                    pr = workOrder.PromoteWorkListItem(command);
                 }
 
                 if(!pr.Success)

@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\ServiceItemsController.cs" />
+    <Compile Include="Controllers\WorkListController.cs" />
     <Compile Include="Controllers\WorkOrdersController.cs" />
     <Compile Include="DataLayer\ApplicationDbContext.cs" />
     <Compile Include="DataLayer\ApplicationUserConfiguration.cs" />
@@ -260,6 +261,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\ITreeNodeDotNet3.cs" />
+    <Compile Include="Models\IWorkListItem.cs" />
     <Compile Include="Models\Labor.cs" />
     <Compile Include="Models\Log4NetHelper.cs" />
     <Compile Include="Models\LogEntry.cs" />
@@ -429,6 +431,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\WorkList\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

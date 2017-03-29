@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SdmoPortal.Models
 {
-    public class WorkOrder
+    public class WorkOrder : IWorkListItem
     {
         public WorkOrder()
         {
@@ -45,7 +45,87 @@ namespace SdmoPortal.Models
         [StringLength(256, ErrorMessage = "Rework Notes must be 256 characters or fewer.")]
         public string ReworkNotes { get; set; }
 
-        public PromotionResult ClaimWorkOrder (string userId)
+        public int Id
+        {
+            get
+            {
+                return WorkOrderId;
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                return WorkOrderStatus.ToString();
+            }
+        }
+
+        public string CurrentWorkerName
+        {
+            get
+            {
+                if (CurrentWorker == null)
+                    return String.Empty;
+
+                return CurrentWorker.FullName;
+            }
+        }
+
+        public string EntityFamiliarName
+        {
+            get{ return "Work Order"; }
+        }
+
+        public string EntityFamiliarNamePlural
+        {
+            get { return "Work Orders"; }
+        }
+
+        public string EntityFormalName
+        {
+            get { return "WorkOrder"; }
+        }
+
+        public string EntityFormalNamePlural
+        {
+            get { return "WorkOrders"; }
+        }
+
+        public int PriorityScore
+        {
+            get { return 0; }
+        }
+
+        public IEnumerable<string> RolesWhichCanClaim
+        {
+            get
+            {
+                List<string> rolesWhichCanClaim = new List<string>();
+
+                switch(WorkOrderStatus)
+                {
+                    case WorkOrderStatus.Created:
+                        rolesWhichCanClaim.Add("Clerk");
+                        rolesWhichCanClaim.Add("Manager");
+                        break;
+                    case WorkOrderStatus.Processed:
+                        rolesWhichCanClaim.Add("Manager");
+                        rolesWhichCanClaim.Add("Admin");
+                        break;
+                    case WorkOrderStatus.Certified:
+                        rolesWhichCanClaim.Add("Admin");
+                        break;
+                    case WorkOrderStatus.Rejected:
+                        rolesWhichCanClaim.Add("Manager");
+                        rolesWhichCanClaim.Add("Admin");
+                        break;
+                }
+                return rolesWhichCanClaim;
+            }
+        }
+
+        public PromotionResult ClaimWorkListItem (string userId)
         {
             PromotionResult promotionResult = new PromotionResult();
 
@@ -78,7 +158,7 @@ namespace SdmoPortal.Models
             return promotionResult;
         }
 
-        public PromotionResult PromoteWorkOrder(string command)
+        public PromotionResult PromoteWorkListItem(string command)
         {
             PromotionResult promotionResult = new PromotionResult();
 
@@ -379,6 +459,10 @@ namespace SdmoPortal.Models
             return promotionResult;
         }
 
+        public PromotionResult RelinquishWorkListItem()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum WorkOrderStatus
