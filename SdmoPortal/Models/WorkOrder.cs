@@ -57,7 +57,9 @@ namespace SdmoPortal.Models
         {
             get
             {
+                //return ((WorkOrderStatus) WorkOrderStatus).ToString();
                 return WorkOrderStatus.ToString();
+
             }
         }
 

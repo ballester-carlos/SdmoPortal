@@ -28,6 +28,5 @@ namespace SdmoPortal.Models
         PromotionResult ClaimWorkListItem(string userId);
         PromotionResult PromoteWorkListItem(string comman);
         PromotionResult RelinquishWorkListItem();
-
     }
 }
