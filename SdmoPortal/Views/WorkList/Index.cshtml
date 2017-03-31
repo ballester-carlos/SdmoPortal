@@ -54,8 +54,11 @@
         <td>
             @if (item.Status != "Approved" && item.Status != "Canceled")
             {
-                string status = ((SdmoPortal.Models.WorkOrderStatus) Int32.Parse(item.Status)).ToString();
-                string linkText = item.Status.Substring(item.Status.Length - 3, 3) == "ing" ? "Edit" : "Claim";
+                string linkText = "Claim";
+                if (item.Status != "")
+                {
+                    linkText = item.Status.Substring(item.Status.Length - 3, 3) == "ing" ? "Edit" : "Claim";
+                }
                 @Html.ActionLink(linkText, "Edit", item.EntityFormalNamePlural, new { id = item.Id }, null) 
             }
         </td>

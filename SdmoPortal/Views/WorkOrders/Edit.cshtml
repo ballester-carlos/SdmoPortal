@@ -33,98 +33,98 @@
         @Html.HiddenFor(model => model.WorkOrderId)
         @Html.HiddenFor(model => model.CustomerId)
         @Html.HiddenFor(model => model.CurrentWorkerId)
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Customer.CompanyName, new {htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.OrderDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OrderDateTime, "DateReadOnly")
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.TargetDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TargetDateTime, "DateWithPicker")
-                @Html.ValidationMessageFor(model => model.TargetDateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.DropDeadDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DropDeadDateTime, "DateWithPicker")
-                @Html.ValidationMessageFor(model => model.DropDeadDateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.ReworkNotes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ReworkNotes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ReworkNotes, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.WorkOrderStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkOrderStatus, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @*Html.EnumDropDownListFor(model => model.WorkOrderStatus, htmlAttributes: new { @class = "form-control" })*@
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.CertificationRequirements, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CertificationRequirements, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CertificationRequirements, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.CurrentWorkerId, "Current Worker", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CurrentWorker.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            </div>
-        </div>
-        
         <div class="row">
-            <div class="col-md-offset-2 col-md-10">
-                @{Html.RenderAction("Index", "Parts", new { workOrderId = Model.WorkOrderId });} 
-                @*{Html.RenderPartial("Index", "Parts",);} *@
+
+            <div class="col-md-5">
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Customer.CompanyName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.OrderDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.OrderDateTime, "DateReadOnly")
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.TargetDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.TargetDateTime, "DateWithPicker")
+                        @Html.ValidationMessageFor(model => model.TargetDateTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.DropDeadDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DropDeadDateTime, "DateWithPicker")
+                        @Html.ValidationMessageFor(model => model.DropDeadDateTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.ReworkNotes, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ReworkNotes, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ReworkNotes, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.WorkOrderStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.WorkOrderStatus, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @*Html.EnumDropDownListFor(model => model.WorkOrderStatus, htmlAttributes: new { @class = "form-control" })*@
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.CertificationRequirements, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CertificationRequirements, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CertificationRequirements, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group form-group-sm">
+                    @Html.LabelFor(model => model.CurrentWorker.FullName, "Current Worker", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.CurrentWorker.FullName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                @{Html.RenderAction("LogEntries", "LogEntries", new { entityFormalNamePlural = "WorkOrders", entityKeyValue = Model.WorkOrderId });}
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-offset-2 col-md-10">
-                @{Html.RenderAction("Index", "Labors", new { workOrderId = Model.WorkOrderId });}
-            </div>
-        </div>
+        @{Html.RenderAction("Index", "Parts", new { workOrderId = Model.WorkOrderId });} 
+        @*{Html.RenderPartial("Index", "Parts",);} *@
 
-        <div class="form-group form-group-sm">
-            @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Total, "CustomNumberFormat",new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        @{Html.RenderAction("Index", "Labors", new { workOrderId = Model.WorkOrderId });}
+
+        <div class="col-md-5">
+            <div class="form-group form-group-sm">
+                @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Total, "CustomNumberFormat", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
             </div>
         </div>
-        
-        <div class="form-group form-group-sm">
-            <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-7">
+            <div class="form-group form-group-sm">
                 <button type="submit" name="Command" value="Save" class="btn btn-default">Save</button>
 
                 <button type="submit" name="Command" value="Claim" class="btn btn-default">Claim</button>
@@ -143,13 +143,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-<div class="row">
-    <div class="col-md-offset-2 col-md-10">
-        @{Html.RenderAction("LogEntries", "LogEntries", new { entityFormalNamePlural = "WorkOrders", entityKeyValue = Model.WorkOrderId });}
-    </div>
+    @Html.ActionLink("Back to List", "Index", "WorkList")
 </div>
 
 @section Scripts {

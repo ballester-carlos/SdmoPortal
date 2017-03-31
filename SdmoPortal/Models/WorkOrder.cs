@@ -58,8 +58,9 @@ namespace SdmoPortal.Models
             get
             {
                 //return ((WorkOrderStatus) WorkOrderStatus).ToString();
-                return WorkOrderStatus.ToString();
-
+                //return WorkOrderStatus.ToString();
+                var itemName = WorkOrderStatus != 0 ? Enum.GetName(typeof(WorkOrderStatus), WorkOrderStatus) : "";
+                return itemName;
             }
         }
 
