@@ -429,6 +429,13 @@
     <Content Include="Views\LogEntries\Index.cshtml" />
     <Content Include="Views\LogEntries\_LogEntries.cshtml" />
     <Content Include="Views\WorkList\Index.cshtml" />
+    <Content Include="Views\WorkOrders\Processing.cshtml" />
+    <Content Include="Views\WorkOrders\Approving.cshtml" />
+    <Content Include="Views\WorkOrders\Certifying.cshtml" />
+    <Content Include="Views\WorkOrders\Claim.cshtml" />
+    <Content Include="Views\WorkOrders\Creating.cshtml" />
+    <Content Include="Views\Labors\_IndexReadOnly.cshtml" />
+    <Content Include="Views\Parts\_IndexReadOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

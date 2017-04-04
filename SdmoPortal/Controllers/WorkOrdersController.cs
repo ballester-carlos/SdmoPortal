@@ -85,6 +85,10 @@ namespace SdmoPortal.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (workOrder.Status.Substring(workOrder.Status.Length - 3, 3) != "ing")
+                return View("Claim", workOrder);
+
             return View(workOrder);
         }
 

@@ -18,16 +18,17 @@ namespace SdmoPortal.Controllers
 
         // GET: Parts
         [ChildActionOnly]
-        public ActionResult Index(int workOrderId)
+        public ActionResult Index(int workOrderId, bool? readOnly)
         {
             ViewBag.WorkOrderId = workOrderId;
 
             var parts = db.Parts.
                 Where(p => p.WorkOrderId == workOrderId).
                 OrderBy(p => p.InventoryItemCode);
-                //Include(p => p.WorkOrder);
+            //Include(p => p.WorkOrder);
 
-            return PartialView("_Index", parts.ToList());
+            string partialViewName = readOnly == true ? "_IndexReadOnly" : "_Index";
+            return PartialView(partialViewName, parts.ToList());
         }
 
         // GET: Parts/Create

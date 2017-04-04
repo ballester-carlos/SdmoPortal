@@ -18,7 +18,7 @@ namespace SdmoPortal.Controllers
 
         // GET: Labors
         [ChildActionOnly]
-        public ActionResult Index(int workOrderId)
+        public ActionResult Index(int workOrderId, bool? readOnly)
         {
             //var labors = db.Labors.Include(l => l.WorkOrder);
             //return View(await labors.ToListAsync());
@@ -28,8 +28,8 @@ namespace SdmoPortal.Controllers
                 Where(l => l.WorkOrderId == workOrderId).
                 OrderBy(l => l.ServiceItemCode);
 
-            return PartialView("_Index", labors.ToList());
-
+            string partialViewName = readOnly == true ? "_IndexReadOnly" : "_Index";
+            return PartialView(partialViewName, labors.ToList());
         }
 
         // GET: Labors/Details/5
