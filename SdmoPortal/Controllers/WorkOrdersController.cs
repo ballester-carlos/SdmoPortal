@@ -107,21 +107,15 @@ namespace SdmoPortal.Controllers
                 PromotionResult pr = new PromotionResult();
 
                 if (command == "Save")
-                {
                     pr.Success = true;
-                }
                 else if (command == "Claim")
-                {
                     pr = workOrder.ClaimWorkListItem(User.Identity.GetUserId());
-                } else
-                {
+                else
                     pr = workOrder.PromoteWorkListItem(command);
-                }
 
                 if(!pr.Success)
-                {
                     TempData["MessageToClient"] = pr.Message;
-                }
+
                 //try
                 //{
                 //    var zero = 0;
@@ -136,7 +130,11 @@ namespace SdmoPortal.Controllers
                 //workOrder.CurrentWorkerId = User.Identity.GetUserId();
                 db.Entry(workOrder).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                if (command == "Claim" && pr.Success)
+                    return RedirectToAction("Edit", workOrder.WorkOrderId);
+
+                return RedirectToAction("Index", "WorkList");
             }
             //ViewBag.CurrentWorkerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", workOrder.CurrentWorkerId);
             //ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "AccountNumber", workOrder.CustomerId);
@@ -147,14 +145,13 @@ namespace SdmoPortal.Controllers
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             WorkOrder workOrder = await db.WorkOrders.FindAsync(id);
+
             if (workOrder == null)
-            {
                 return HttpNotFound();
-            }
+
             return View(workOrder);
         }
 

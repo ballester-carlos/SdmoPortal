@@ -1,7 +1,7 @@
 ﻿@model SdmoPortal.Models.WorkOrder
 
 @{
-    ViewBag.Title = "Work Order Edit";
+    ViewBag.Title = "Certify Work Order";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -27,8 +27,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>WorkOrder</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.WorkOrderId)
         @Html.HiddenFor(model => model.CustomerId)
@@ -53,7 +51,7 @@
                 <div class="form-group form-group-sm">
                     @Html.LabelFor(model => model.TargetDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.TargetDateTime, "DateWithPicker")
+                        @Html.EditorFor(model => model.TargetDateTime, "DateReadOnly")
                         @Html.ValidationMessageFor(model => model.TargetDateTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -61,7 +59,7 @@
                 <div class="form-group form-group-sm">
                     @Html.LabelFor(model => model.DropDeadDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.DropDeadDateTime, "DateWithPicker")
+                        @Html.EditorFor(model => model.DropDeadDateTime, "DateReadOnly")
                         @Html.ValidationMessageFor(model => model.DropDeadDateTime, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -69,7 +67,7 @@
                 <div class="form-group form-group-sm">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -77,7 +75,7 @@
                 <div class="form-group form-group-sm">
                     @Html.LabelFor(model => model.ReworkNotes, htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.EditorFor(model => model.ReworkNotes, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.ReworkNotes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => model.ReworkNotes, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -126,17 +124,7 @@
         <div class="col-md-7">
             <div class="form-group form-group-sm">
                 <button type="submit" name="Command" value="Save" class="btn btn-default">Save</button>
-
-                <button type="submit" name="Command" value="Claim" class="btn btn-default">Claim</button>
-
-                <button type="submit" name="Command" value="PromoteToCreated" class="btn btn-default">Promote To Created</button>
-                <button type="submit" name="Command" value="PromoteToProcessed" class="btn btn-default">Promote To Processed</button>
-                <button type="submit" name="Command" value="PromoteToCertified" class="btn btn-default">Promote To Certified</button>
-                <button type="submit" name="Command" value="PromoteToApproved" class="btn btn-default">Promote To Approved</button>
-
-                <button type="submit" name="Command" value="DemoteToCreated" class="btn btn-default">Demote To Created</button>
-                <button type="submit" name="Command" value="DemoteToRejected" class="btn btn-default">Demote To Rejected</button>
-                <button type="submit" name="Command" value="DemoteToCanceled" class="btn btn-default">Demote To Canceled</button>
+                <button type="submit" name="Command" value="PromoteToCertified" class="btn btn-success">Promote To Certified</button>
             </div>
         </div>
     </div>

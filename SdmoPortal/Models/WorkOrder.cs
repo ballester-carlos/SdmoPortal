@@ -97,7 +97,22 @@ namespace SdmoPortal.Models
 
         public int PriorityScore
         {
-            get { return 0; }
+            get
+            {
+                int priorityScore = (int)WorkOrderStatus;
+                if (Total >= 1000000m) priorityScore += 70;
+                else if (Total >= 500000m) priorityScore += 60;
+                else if (Total >= 250000m) priorityScore += 50;
+                else if (Total >= 100000m) priorityScore += 40;
+                else if (Total >= 25000m) priorityScore += 30;
+                else if (Total >= 10000m) priorityScore += 20;
+                else if (Total >= 1000m) priorityScore += 10;
+
+                if (priorityScore < 0) priorityScore = 0;
+                if (priorityScore > 100) priorityScore = 100;
+
+                return priorityScore;
+            }
         }
 
         public IEnumerable<string> RolesWhichCanClaim
