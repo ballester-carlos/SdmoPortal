@@ -89,7 +89,7 @@ namespace SdmoPortal.Controllers
             if (workOrder.Status.Substring(workOrder.Status.Length - 3, 3) != "ing")
                 return View("Claim", workOrder);
 
-            return View(workOrder);
+            return View(workOrder.Status, workOrder);
         }
 
         // POST: WorkOrders/Edit/5

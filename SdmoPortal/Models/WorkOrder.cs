@@ -145,12 +145,12 @@ namespace SdmoPortal.Models
 
         public PromotionResult ClaimWorkListItem (string userId)
         {
-            PromotionResult promotionResult = new PromotionResult();
+            PromotionResult promotionResult = WorkListBusinessRules.CanClaimWorkListItem(userId);
 
-            //if(!promotionResult.Success)
-            //{
-            //    return promotionResult;
-            //}
+            if (!promotionResult.Success)
+            {
+                return promotionResult;
+            }
 
             switch (WorkOrderStatus)
             {
@@ -479,7 +479,36 @@ namespace SdmoPortal.Models
 
         public PromotionResult RelinquishWorkListItem()
         {
-            throw new NotImplementedException();
+            PromotionResult promotionResult = new PromotionResult { Success = true };
+
+            if (CurrentWorkerId == null || Status.Substring(Status.Length - 3, 3) != "ing" )
+            {
+                promotionResult.Message = String.Format("Work order {0} can not be relinquished because it is not currently being worked on.", WorkOrderId);
+                promotionResult.Success = false;
+            }
+
+            if (promotionResult.Success)
+            {
+                CurrentWorker = null;
+                CurrentWorkerId = null;
+
+                switch (WorkOrderStatus)
+                {
+                    case WorkOrderStatus.Processing:
+                        WorkOrderStatus = WorkOrderStatus.Created;
+                        break;
+                    case WorkOrderStatus.Certifying:
+                        WorkOrderStatus = WorkOrderStatus.Processed;
+                        break;
+                    case WorkOrderStatus.Approving:
+                        WorkOrderStatus = WorkOrderStatus.Certified;
+                        break;
+                }
+                promotionResult.Message = String.Format("Work order {0} was successfully and its status was reset to {1}.", WorkOrderId, WorkOrderStatus);
+            }
+            Log4NetHelper.Log(promotionResult.Message, LogLevel.INFO, EntityFormalNamePlural, WorkOrderId, HttpContext.Current.User.Identity.Name, null);
+
+            return promotionResult;
         }
     }
 

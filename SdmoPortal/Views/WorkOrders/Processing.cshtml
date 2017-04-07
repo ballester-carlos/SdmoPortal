@@ -27,6 +27,7 @@
         @Html.HiddenFor(model => model.WorkOrderId)
         @Html.HiddenFor(model => model.CustomerId)
         @Html.HiddenFor(model => model.CurrentWorkerId)
+        @Html.HiddenFor(model => model.CertificationRequirements)
         <div class="row">
 
             <div class="col-md-5">
@@ -121,6 +122,7 @@
             <div class="form-group form-group-sm">
                 <button type="submit" name="Command" value="Save" class="btn btn-default">Save</button>
                 <button type="submit" name="Command" value="PromoteToProcessed" class="btn btn-success">Promote To Processed</button>
+                <button type="submit" name="Command" value="Relinquish" class="btn btn-warning">Relinquish</button>
             </div>
         </div>
     </div>

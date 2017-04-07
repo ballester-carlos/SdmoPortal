@@ -108,9 +108,9 @@
             </div>
         </div>
 
-        @{Html.RenderAction("Index", "Parts", new { workOrderId = Model.WorkOrderId });} 
+        @{Html.RenderAction("Index", "Parts", new { workOrderId = Model.WorkOrderId, readOnly = true });} 
 
-        @{Html.RenderAction("Index", "Labors", new { workOrderId = Model.WorkOrderId });}
+        @{Html.RenderAction("Index", "Labors", new { workOrderId = Model.WorkOrderId, readOnly = true });}
 
         <div class="col-md-5">
             <div class="form-group form-group-sm">
