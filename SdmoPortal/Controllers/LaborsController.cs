@@ -67,6 +67,7 @@ namespace SdmoPortal.Controllers
             {
                 db.Labors.Add(labor);
                 await db.SaveChangesAsync();
+                Log4NetHelper.Log(String.Format("Labor item {0} has been added to work order {1}.", labor.ServiceItemCode, labor.WorkOrderId), LogLevel.INFO, "WorkOrders", labor.WorkOrderId, User.Identity.Name, null);
                 return Json(new { success = true }); //    RedirectToAction("Index");
             }
 
@@ -101,6 +102,7 @@ namespace SdmoPortal.Controllers
             {
                 db.Entry(labor).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                Log4NetHelper.Log(String.Format("Labor item {0} has been edited for work order {1}.", labor.ServiceItemCode, labor.WorkOrderId), LogLevel.INFO, "WorkOrders", labor.WorkOrderId, User.Identity.Name, null);
                 return Json(new { success = true });  // RedirectToAction("Index");
             }
             ViewBag.WorkOrderId = new SelectList(db.WorkOrders, "WorkOrderId", "Description", labor.WorkOrderId);

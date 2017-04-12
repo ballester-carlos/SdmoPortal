@@ -24,7 +24,6 @@ namespace SdmoPortal.Models
                 promotionResult.Message = String.Format("You can not claim any more work list items because you already have {0} and the maximun", numberOfClaimedWorkListItems);
                 promotionResult.Success = false;
             }
-            
             return promotionResult;
         }
     }

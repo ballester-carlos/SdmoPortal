@@ -110,6 +110,8 @@ namespace SdmoPortal.Controllers
                     pr.Success = true;
                 else if (command == "Claim")
                     pr = workOrder.ClaimWorkListItem(User.Identity.GetUserId());
+                else if (command == "Relinquish")
+                    pr = workOrder.RelinquishWorkListItem();
                 else
                     pr = workOrder.PromoteWorkListItem(command);
 
@@ -130,7 +132,7 @@ namespace SdmoPortal.Controllers
                 //workOrder.CurrentWorkerId = User.Identity.GetUserId();
                 db.Entry(workOrder).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-
+                Log4NetHelper.Log(pr.Message, LogLevel.INFO, workOrder.EntityFormalNamePlural, workOrder.Id, User.Identity.Name, null);
                 if (command == "Claim" && pr.Success)
                     return RedirectToAction("Edit", workOrder.WorkOrderId);
 
@@ -163,6 +165,9 @@ namespace SdmoPortal.Controllers
             WorkOrder workOrder = await db.WorkOrders.FindAsync(id);
             db.WorkOrders.Remove(workOrder);
             await db.SaveChangesAsync();
+
+            Log4NetHelper.Log(String.Format("Work order {0} deleted.", workOrder.WorkOrderId), LogLevel.INFO, "WorkOrders", workOrder.WorkOrderId, User.Identity.Name, null);
+            
             return RedirectToAction("Index");
         }
 

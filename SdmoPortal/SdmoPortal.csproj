@@ -270,6 +270,7 @@
     <Compile Include="Models\PromotionResult.cs" />
     <Compile Include="Models\ServiceItem.cs" />
     <Compile Include="Models\TracingLayout.cs" />
+    <Compile Include="Models\Widget.cs" />
     <Compile Include="Models\WorkListBusinessRules.cs" />
     <Compile Include="Models\WorkOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

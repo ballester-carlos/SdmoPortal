@@ -52,6 +52,8 @@ namespace SdmoPortal.Controllers
             {
                 db.Parts.Add(part);
                 await db.SaveChangesAsync();
+                Log4NetHelper.Log(String.Format("Part item {0} has been added to work order {1}.", part.InventoryItemCode, part.WorkOrderId), LogLevel.INFO, "WorkOrders", part.WorkOrderId, User.Identity.Name, null);
+
                 //TODO: return RedirectToAction("Index");
                 return Json(new { success = true });
             }
@@ -89,6 +91,7 @@ namespace SdmoPortal.Controllers
             {
                 db.Entry(part).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+                Log4NetHelper.Log(String.Format("Part item {0} has been edited for work order {1}.", part.InventoryItemCode, part.WorkOrderId), LogLevel.INFO, "WorkOrders", part.WorkOrderId, User.Identity.Name, null);
                 //TODO: return RedirectToAction("Index");
                 return Json(new { success = true });
             }

@@ -172,7 +172,7 @@ namespace SdmoPortal.Models
             {
                 CurrentWorkerId = userId;
             }
-
+            Log4NetHelper.Log(promotionResult.Message, LogLevel.INFO, EntityFormalNamePlural, Id, HttpContext.Current.User.Identity.Name, null);
             return promotionResult;
         }
 
@@ -250,7 +250,6 @@ namespace SdmoPortal.Models
                 WorkOrderStatus = WorkOrderStatus.Created;
                 promotionResult.Message = String.Format("Work order {0} successfuly promoted to status {1}.", WorkOrderId, WorkOrderStatus);
             }
-
             return promotionResult;
         }
 
@@ -274,7 +273,6 @@ namespace SdmoPortal.Models
             {
                 promotionResult.Message = "Failed to promote the work order to Processing status because its current status prevented it.";
             }
-
             return promotionResult;
         }
 
@@ -299,7 +297,6 @@ namespace SdmoPortal.Models
             {
                 promotionResult.Message = "Failed to promote the work order to Certifying status because its current status prevented it.";
             }
-
             return promotionResult;
         }
 
@@ -363,7 +360,6 @@ namespace SdmoPortal.Models
                 WorkOrderStatus = WorkOrderStatus.Processed;
                 promotionResult.Message = String.Format("Work order {0} successfuly promoted to status {1}.", WorkOrderId, WorkOrderStatus);
             }
-
             return promotionResult;
         }
 
@@ -387,7 +383,6 @@ namespace SdmoPortal.Models
             {
                 promotionResult.Message = "Failed to promote the work order to Approving status because its current status prevented it.";
             }
-
             return promotionResult;
         }
 
@@ -407,7 +402,6 @@ namespace SdmoPortal.Models
                 WorkOrderStatus = WorkOrderStatus.Approved;
                 promotionResult.Message = String.Format("Work order {0} successfuly promoted to status {1}.", WorkOrderId, WorkOrderStatus);
             }
-
             return promotionResult;
         }
 
@@ -433,7 +427,6 @@ namespace SdmoPortal.Models
                 WorkOrderStatus = WorkOrderStatus.Created;
                 promotionResult.Message = String.Format("Work order {0} successfuly demoted to status {1}.", WorkOrderId, WorkOrderStatus);
             }
-
             return promotionResult;
         }
 
@@ -453,7 +446,6 @@ namespace SdmoPortal.Models
                 WorkOrderStatus = WorkOrderStatus.Canceled;
                 promotionResult.Message = String.Format("Work order {0} successfuly demoted to status {1}.", WorkOrderId, WorkOrderStatus);
             }
-
             return promotionResult;
         }
 
@@ -473,7 +465,6 @@ namespace SdmoPortal.Models
                 WorkOrderStatus = WorkOrderStatus.Rejected;
                 promotionResult.Message = String.Format("Work order {0} successfuly demoted to status {1}.", WorkOrderId, WorkOrderStatus);
             }
-
             return promotionResult;
         }
 
