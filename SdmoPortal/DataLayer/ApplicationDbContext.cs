@@ -35,6 +35,7 @@ namespace SdmoPortal.DataLayer
             modelBuilder.Configurations.Add(new WorkOrderConfiguration());
             modelBuilder.Configurations.Add(new ApplicationUserConfiguration());
             modelBuilder.Configurations.Add(new LogEntryConfiguration());
+            modelBuilder.Configurations.Add(new WidgetConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -43,6 +44,10 @@ namespace SdmoPortal.DataLayer
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<SdmoPortal.Models.Widget> Widgets { get; set; }
+
+        public System.Data.Entity.DbSet<SdmoPortal.Models.ApplicationUser> ApplicationUsers { get; set; }
         //TO DO: We don't need this DbSet since we are going to use EF's UserManager built in
         //public System.Data.Entity.DbSet<SdmoPortal.Models.ApplicationUser> ApplicationUsers { get; set; }
         //TO DO: We don't need this DbSet since we are going to use RoleManager instead

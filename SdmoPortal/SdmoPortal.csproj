@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PartsController.cs" />
     <Compile Include="Controllers\ServiceItemsController.cs" />
+    <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Controllers\WorkListController.cs" />
     <Compile Include="Controllers\WorkOrdersController.cs" />
     <Compile Include="DataLayer\ApplicationDbContext.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="DataLayer\LogEntryConfiguration.cs" />
     <Compile Include="DataLayer\PartConfiguration.cs" />
     <Compile Include="DataLayer\ServiceItemConfiguration.cs" />
+    <Compile Include="DataLayer\WidgetConfiguration.cs" />
     <Compile Include="DataLayer\WorkOrderConfiguration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -438,6 +440,11 @@
     <Content Include="Views\WorkOrders\Creating.cshtml" />
     <Content Include="Views\Labors\_IndexReadOnly.cshtml" />
     <Content Include="Views\Parts\_IndexReadOnly.cshtml" />
+    <Content Include="Views\Widgets\Create.cshtml" />
+    <Content Include="Views\Widgets\Delete.cshtml" />
+    <Content Include="Views\Widgets\Details.cshtml" />
+    <Content Include="Views\Widgets\Edit.cshtml" />
+    <Content Include="Views\Widgets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

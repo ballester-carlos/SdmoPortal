@@ -31,7 +31,7 @@ namespace SdmoPortal.Models
 
         public virtual ApplicationUser CurrentWorker { get; set; }
 
-        public string CurrentWorkId { get; set; }
+        public string CurrentWorkerId { get; set; }
 
         public int Id
         {
@@ -133,5 +133,191 @@ namespace SdmoPortal.Models
             return promotionResult;
         }
 
+        public PromotionResult PromoteWorkListItem(string command)
+        {
+            PromotionResult promotionResult = new PromotionResult();
+
+            switch (command)
+            {
+                case "PromoteToIntegrated":
+                    promotionResult = PromoteToIntegrated();
+                    break;
+                case "PromoteToApproved":
+                    promotionResult = PromoteToApproved();
+                    break;
+                case "DemoteToCanceled":
+                    promotionResult = DemoteToCanceled();
+                    break;
+            }
+
+            Log4NetHelper.Log(promotionResult.Message, LogLevel.INFO, EntityFormalNamePlural, WidgetId, HttpContext.Current.User.Identity.Name, null);
+
+            if (promotionResult.Success)
+            {
+                CurrentWorker = null;
+                CurrentWorkerId = null;
+            }
+
+            return promotionResult;
+        }
+
+        public PromotionResult RelinquishWorkListItem()
+        {
+            PromotionResult promotionResult = new PromotionResult { Success = true };
+
+            if (CurrentWorkerId == null || Status.Substring(Status.Length - 3, 3) != "ing")
+            {
+                promotionResult.Message = String.Format("Widget {0} can not be relinquished because it is not currently being worked on.", WidgetId);
+                promotionResult.Success = false;
+            }
+
+            if (promotionResult.Success)
+            {
+                CurrentWorker = null;
+                CurrentWorkerId = null;
+
+                switch (WidgetStatus)
+                {
+                    case WidgetStatus.Integrating:
+                        WidgetStatus = WidgetStatus.Created;
+                        break;
+                    case WidgetStatus.Approving:
+                        WidgetStatus = WidgetStatus.Integrated;
+                        break;
+                }
+                promotionResult.Message = String.Format("Widget {0} was successfully relinquished and its status was reset to {1}.", WidgetId, WidgetStatus);
+            }
+            Log4NetHelper.Log(promotionResult.Message, LogLevel.INFO, EntityFormalNamePlural, WidgetId, HttpContext.Current.User.Identity.Name, null);
+
+            return promotionResult;
+        }
+
+        private PromotionResult PromoteToIntegrating()
+        {
+            if (WidgetStatus == WidgetStatus.Created)
+            {
+                WidgetStatus = WidgetStatus.Integrating;
+            }
+
+            PromotionResult promotionResult = new PromotionResult();
+            promotionResult.Success = WidgetStatus == WidgetStatus.Integrating; 
+
+            if (promotionResult.Success)
+            {
+                promotionResult.Message = String.Format("Widget {0} successfuly claimed by {1} and promoted to status {2}.",
+                    WidgetId,
+                    HttpContext.Current.User.Identity.Name,
+                    WidgetStatus);
+            }
+            else
+            {
+                promotionResult.Message = "Failed to promote the widget to Integrating status because its current status prevented it.";
+            }
+            return promotionResult;
+        }
+
+        private PromotionResult PromoteToApproving()
+        {
+            if (WidgetStatus == WidgetStatus.Integrated)
+            {
+                WidgetStatus = WidgetStatus.Approving;
+            }
+
+            PromotionResult promotionResult = new PromotionResult();
+            promotionResult.Success = WidgetStatus == WidgetStatus.Approving; ;
+
+            if (promotionResult.Success)
+            {
+                promotionResult.Message = String.Format("Widget {0} successfuly claimed by {1} and promoted to status {2}.", WidgetId, HttpContext.Current.User.Identity.Name, WidgetStatus);
+            }
+            else
+            {
+                promotionResult.Message = "Failed to promote the widget to Approving status because ies current status prevented it.";
+            }
+
+            return promotionResult;
+        }
+
+        private PromotionResult PromoteToIntegrated()
+        {
+            PromotionResult promotionResult = new PromotionResult();
+            promotionResult.Success = true;
+
+            if (WidgetStatus != WidgetStatus.Integrating)
+            {
+                promotionResult.Success = false;
+                promotionResult.Message = "Failed to promote the widget to Integrated status because its current status prevented it.";
+            }
+
+            if (String.IsNullOrWhiteSpace(MainBusCode))
+            {
+                promotionResult.Success = false;
+                promotionResult.Message = "Failed to promote the widget to Integrated status because Main Bus Code was not present.";
+            }
+
+            if (promotionResult.Success)
+            {
+                WidgetStatus = WidgetStatus.Integrated;
+                promotionResult.Message = String.Format("Widget {0} successfuly promoted to status {1}.", WidgetId, WidgetStatus);
+            }
+
+            return promotionResult;
+        }
+
+        private PromotionResult PromoteToApproved()
+        {
+            PromotionResult promotionResult = new PromotionResult();
+            promotionResult.Success = true;
+
+            if (WidgetStatus != WidgetStatus.Approving)
+            {
+                promotionResult.Success = false;
+                promotionResult.Message = "Failed to promote the widget to Approved status because its current status prevented it.";
+            }
+
+            if (TestPassDateTime == null)
+            {
+                promotionResult.Success = false;
+                promotionResult.Message = "Failed to promote the widget to Approved status because Test Pass Date was not present.";
+            }
+
+            if (promotionResult.Success)
+            {
+                WidgetStatus = WidgetStatus.Approved;
+                promotionResult.Message = String.Format("Widget {0} successfuly promoted to status {1}.", WidgetId, WidgetStatus);
+            }
+
+            return promotionResult;
+        }
+
+        private PromotionResult DemoteToCanceled()
+        {
+            PromotionResult promotionResult = new PromotionResult();
+            promotionResult.Success = true;
+
+            if (WidgetStatus != WidgetStatus.Approving && WidgetStatus != WidgetStatus.Integrating)
+            {
+                promotionResult.Success = false;
+                promotionResult.Message = "Failed to demote the widget to Canceled status because its current status prevented it.";
+            }
+
+            if (promotionResult.Success)
+            {
+                WidgetStatus = WidgetStatus.Canceled;
+                promotionResult.Message = String.Format("Widget {0} successfuly demoted to status {1}.", WidgetId, WidgetStatus);
+            }
+
+            return promotionResult;
+        }
+    }
+
+    public enum WidgetStatus
+    {
+        Created = 10,
+        Integrating = 15,
+        Integrated = 20,
+        Approving = 25,
+        Approved = 30,
+        Canceled = -10
     }
 }

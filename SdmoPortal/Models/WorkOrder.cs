@@ -495,7 +495,7 @@ namespace SdmoPortal.Models
                         WorkOrderStatus = WorkOrderStatus.Certified;
                         break;
                 }
-                promotionResult.Message = String.Format("Work order {0} was successfully and its status was reset to {1}.", WorkOrderId, WorkOrderStatus);
+                promotionResult.Message = String.Format("Work order {0} was successfully relinquished and its status was reset to {1}.", WorkOrderId, WorkOrderStatus);
             }
             Log4NetHelper.Log(promotionResult.Message, LogLevel.INFO, EntityFormalNamePlural, WorkOrderId, HttpContext.Current.User.Identity.Name, null);
 
