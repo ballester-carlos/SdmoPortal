@@ -27,6 +27,7 @@ namespace SdmoPortal.Controllers
 
             IEnumerable<IWorkListItem> workListItemsToDisplay = new List<IWorkListItem>();
             workListItemsToDisplay = workListItemsToDisplay.Concat(GetWorkerOrders(userId, userRolesList));
+            workListItemsToDisplay = workListItemsToDisplay.Concat(GetWidgets(userId, userRolesList));
             return View(workListItemsToDisplay.OrderByDescending(wl => wl.PriorityScore));
 
         }
@@ -42,6 +43,19 @@ namespace SdmoPortal.Controllers
                 wo => wo.CurrentWorkerId == userId);
 
             return claimableWorkOrder.Concat(workOdersIAmWorkingOn);
+        }
+
+        private IEnumerable<IWorkListItem> GetWidgets(string userId, List<string> userRolesList)
+        {
+            IEnumerable<IWorkListItem> claimableWidgets = db.Widgets.Where(
+                w => w.WidgetStatus != WidgetStatus.Approved)
+                .ToList()
+                .Where(wo => userRolesList.Any(ur => wo.RolesWhichCanClaim.Contains(ur)));
+
+            IEnumerable<IWorkListItem> widgetsIAmWorkingOn = db.WorkOrders.Where(
+                w => w.CurrentWorkerId == userId);
+
+            return claimableWidgets.Concat(widgetsIAmWorkingOn);
         }
 
         protected override void Dispose(bool disposing)

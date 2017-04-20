@@ -45,7 +45,8 @@ namespace SdmoPortal.Controllers
                 return RedirectToAction("Index", "WorkList");
             }
 
-            ViewBag.CurrentWorkerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", widget.CurrentWorkerId);
+            ViewBag.CurrentWorkerId = new SelectList(db.Widgets, "WidgetId", "CurrentWorkerName", widget.CurrentWorkerId);
+            //ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "AccountNumber", workOrder.CustomerId);
             return View(widget);
         }
 
@@ -61,7 +62,7 @@ namespace SdmoPortal.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CurrentWorkerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", widget.CurrentWorkerId);
+            ViewBag.CurrentWorkerId = new SelectList(db.Widgets, "CurrentWorkerId", "CurrentWorkerName", widget.CurrentWorkerId);
 
             if (widget.Status.Substring(widget.Status.Length - 3, 3) != "ing")
                 return View("Claim", widget);

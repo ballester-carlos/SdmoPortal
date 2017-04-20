@@ -23,6 +23,7 @@ namespace SdmoPortal.DataLayer
         public DbSet<ServiceItem> ServiceItems { get; set; }
         public DbSet<WorkOrder> WorkOrders { get; set; }
         public DbSet<LogEntry> LogEntries { get; set; }
+        public DbSet<Widget> Widgets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -45,9 +46,6 @@ namespace SdmoPortal.DataLayer
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<SdmoPortal.Models.Widget> Widgets { get; set; }
-
-        public System.Data.Entity.DbSet<SdmoPortal.Models.ApplicationUser> ApplicationUsers { get; set; }
         //TO DO: We don't need this DbSet since we are going to use EF's UserManager built in
         //public System.Data.Entity.DbSet<SdmoPortal.Models.ApplicationUser> ApplicationUsers { get; set; }
         //TO DO: We don't need this DbSet since we are going to use RoleManager instead

@@ -7,11 +7,12 @@
 <h2>@ViewBag.Title</h2>
 
 <p class="text-danger">@TempData["MessageToClient"]</p>
-
+@*Clerk*@
 <p>
-    @if (User.IsInRole("Clerk"))
+    @if (User.IsInRole("Admin"))
     {
-        @Html.ActionLink("Create Work Order", "Create", "WorkOrders", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create Work Order", "Create", "WorkOrders", null, new { @class = "btn btn-primary" }) @:&nbsp;
+        @Html.ActionLink("Create Widget", "Create", "Widgets", null, new { @class = "btn btn-primary" })
     }
 </p>
 <table class="table table-hover table-striped">
