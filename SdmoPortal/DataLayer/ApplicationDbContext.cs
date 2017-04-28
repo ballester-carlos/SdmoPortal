@@ -13,6 +13,7 @@ namespace SdmoPortal.DataLayer
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            System.Data.Entity.Database.SetInitializer<ApplicationDbContext>(null);
         }
 
         public DbSet<Category> Categories { get; set; }

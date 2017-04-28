@@ -38,5 +38,7 @@ namespace SdmoPortal.Models
         //TO DO: Add the navigation so in WorkOrderConfiguration add :
         //            HasRequired(wo => wo.Customer).WithMany(c => c.WorkOrders).WillCascadeOnDelete(false);
         public List<WorkOrder> WorkOrders { get; set; }
+
+        public bool Cloaked { get; set; }
     }
 }

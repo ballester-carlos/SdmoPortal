@@ -191,6 +191,7 @@
     <Compile Include="Controllers\ApplicationRolesController.cs" />
     <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryItemsController.cs" />
     <Compile Include="Controllers\LaborsController.cs" />
@@ -258,6 +259,10 @@
     <Compile Include="Migrations\201704200123388_Widget.cs" />
     <Compile Include="Migrations\201704200123388_Widget.Designer.cs">
       <DependentUpon>201704200123388_Widget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704260152428_Cloaked.cs" />
+    <Compile Include="Migrations\201704260152428_Cloaked.Designer.cs">
+      <DependentUpon>201704260152428_Cloaked.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -452,6 +457,11 @@
     <Content Include="Views\Widgets\Integrating.cshtml" />
     <Content Include="Views\Widgets\Approving.cshtml" />
     <Content Include="Views\Widgets\Claim.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -496,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704200123388_Widget.resx">
       <DependentUpon>201704200123388_Widget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704260152428_Cloaked.resx">
+      <DependentUpon>201704260152428_Cloaked.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

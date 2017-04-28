@@ -46,7 +46,7 @@ namespace SdmoPortal.Controllers
         public ActionResult Create()
         {
             //ViewBag.CurrentWorkerId = new SelectList(db.ApplicationUsers, "Id", "FirstName");
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "CompanyName");
+            ViewBag.CustomerId = new SelectList(db.Customers.Where(c => c.Cloaked == false), "CustomerId", "CompanyName");
             return View();
         }
 
@@ -69,7 +69,7 @@ namespace SdmoPortal.Controllers
             }
 
             //ViewBag.CurrentWorkerId = new SelectList(db.ApplicationUsers, "Id", "FirstName", workOrder.CurrentWorkerId);
-            ViewBag.CustomerId = new SelectList(db.Customers, "CustomerId", "AccountNumber", workOrder.CustomerId);
+            ViewBag.CustomerId = new SelectList(db.Customers.Where(c => c.Cloaked == false), "CustomerId", "AccountNumber", workOrder.CustomerId);
             return View(workOrder);
         }
 
