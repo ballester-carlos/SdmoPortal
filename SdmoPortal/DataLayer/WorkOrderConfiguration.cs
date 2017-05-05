@@ -18,6 +18,7 @@ namespace SdmoPortal.DataLayer
             HasRequired(wo => wo.Customer).WithMany(c => c.WorkOrders).WillCascadeOnDelete(false);
             //TO DO: Added later
             Property(wo => wo.ReworkNotes).HasMaxLength(256).IsOptional();
+            Property(wo => wo.RowVersion).IsRowVersion();
         }
     }
 }

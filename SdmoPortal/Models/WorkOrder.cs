@@ -45,6 +45,8 @@ namespace SdmoPortal.Models
         [StringLength(256, ErrorMessage = "Rework Notes must be 256 characters or fewer.")]
         public string ReworkNotes { get; set; }
 
+        public byte[] RowVersion { get; set; }
+
         public int Id
         {
             get

@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using SdmoPortal.DataLayer;
 using SdmoPortal.Models;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity.Infrastructure;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace SdmoPortal.Controllers
 {
@@ -85,6 +87,18 @@ namespace SdmoPortal.Controllers
             {
                 return HttpNotFound();
             }
+            // if a different user has claimed the work order since you refreshed the work list, redirect to work list with error message
+            if(workOrder.CurrentWorkerId != null && workOrder.CurrentWorkerId != User.Identity.GetUserId())
+            {
+                ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                string claimedUserName = userManager.FindById(workOrder.CurrentWorkerId).UserName;
+
+                string message = String.Format("User {0} has claimed work order {1} before user {2} could, and so the work order remains claimed by {0}.", claimedUserName, workOrder.WorkOrderId, User.Identity.GetUserId()); //?????
+                TempData["MessageToClient"] = message;
+                Log4NetHelper.Log(message, LogLevel.INFO, workOrder.EntityFormalNamePlural, workOrder.WorkOrderId, User.Identity.Name, null);
+                return RedirectToAction("Index", "WorkList");
+
+            }
 
             if (workOrder.Status.Substring(workOrder.Status.Length - 3, 3) != "ing")
                 return View("Claim", workOrder);
@@ -97,7 +111,7 @@ namespace SdmoPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "WorkOrderId,CustomerId,OrderDateTime,TargetDateTime,DropDeadDateTime,Description,WorkOrderStatus,CertificationRequirements,CurrentWorkerId,ReworkNotes")] WorkOrder workOrder, string command)
+        public async Task<ActionResult> Edit([Bind(Include = "WorkOrderId,CustomerId,OrderDateTime,TargetDateTime,DropDeadDateTime,Description,WorkOrderStatus,CertificationRequirements,CurrentWorkerId,ReworkNotes,RowVersion")] WorkOrder workOrder, string command)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +121,11 @@ namespace SdmoPortal.Controllers
                 PromotionResult pr = new PromotionResult();
 
                 if (command == "Save")
+                {
                     pr.Success = true;
+                    pr.Message = String.Format("Changes to work order {0} have been successfully saved.", workOrder.Id);
+                    Log4NetHelper.Log(pr.Message, LogLevel.INFO, workOrder.EntityFormalNamePlural, workOrder.Id, User.Identity.Name, null);
+                }
                 else if (command == "Claim")
                     pr = workOrder.ClaimWorkListItem(User.Identity.GetUserId());
                 else if (command == "Relinquish")
@@ -131,7 +149,18 @@ namespace SdmoPortal.Controllers
                 //Now is handle by the ClaimWorkOrder method
                 //workOrder.CurrentWorkerId = User.Identity.GetUserId();
                 db.Entry(workOrder).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                try
+                {
+                    await db.SaveChangesAsync();
+                }
+                catch(DbUpdateConcurrencyException ex)
+                {
+                    if(command == "Claim")
+                        TempData["MessageToClient"] = String.Format("Someone else has claimed work order {0} since you retrieve it.", workOrder.WorkOrderId);
+                    else
+                        TempData["MessageToClient"] = String.Format("Someone else has modified work order {0} since you retrieve it.", workOrder.WorkOrderId);
+                    return RedirectToAction("Index", "WorkList");
+                }
                 Log4NetHelper.Log(pr.Message, LogLevel.INFO, workOrder.EntityFormalNamePlural, workOrder.Id, User.Identity.Name, null);
                 if (command == "Claim" && pr.Success)
                     return RedirectToAction("Edit", workOrder.WorkOrderId);
